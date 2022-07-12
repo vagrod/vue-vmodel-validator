@@ -1,14 +1,14 @@
 {
   "private": false,
   "name": "vue-vmodel-validator",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "Simple vuejs 3.0+ data input validator based on v-model and v-model:value",
   "readmeFilename": "README.md",
   "scripts": {
     "build": "rm -rf lib && rollup -c"
   },
   "files": [
-    "lib/*"
+    "*"
   ],
   "repository": {
     "type": "git",

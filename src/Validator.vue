@@ -1,7 +1,7 @@
 <template>
   <slot />
-  <slot name="message" v-bind:text="errorText" v-if="errorText">
-    <small>{{ errorText }}</small>
+  <slot name="message" v-bind:text="finalErrorText" v-if="finalErrorText">
+    <small>{{ finalErrorText }}</small>
   </slot>
 </template>
 
@@ -9,14 +9,14 @@
 import { defineComponent, onMounted, PropType, ref, watch } from "vue";
 import { ValidateEvent, ValidationPresets } from "./Shared";
 
-const isNullOrEmpty = (s) => {
+const isNullOrEmpty = (s: string | undefined | null) => {
   return s === undefined || s === null || s === '' || (s.trim !== undefined && s.trim() === '');
 }
 const EmptyGuid = '00000000-0000-0000-0000-000000000000';
 
 function validatePreset(value: unknown, p: ValidationPresets, errorText: string | undefined): string | undefined {
-  const isFloat = (n: unknown): boolean => {
-    return Number(n) === n && n % 1 !== 0;
+  const isFloat = (n: number): boolean => {
+    return n % 1 !== 0;
   };
 
   if(value instanceof Object){
@@ -47,15 +47,15 @@ function validatePreset(value: unknown, p: ValidationPresets, errorText: string 
     if(isNullOrEmpty(s))
       return errorText ?? 'Value must be entered';
 
-    if (!Number.isInteger(s))
+    if (isNaN(Number(s)))
       return errorText ?? 'Incorrect number provided';
 
-    if(isFloat(value))
+    const n = value as number;
+
+    if(isFloat(n))
       return errorText ?? 'Enter an integer value';
 
     if (p === ValidationPresets.NumberPositive){
-      const n = value as number;
-
       if (n < 0)
         return errorText ?? 'Enter a positive value';
     }
@@ -66,7 +66,12 @@ function validatePreset(value: unknown, p: ValidationPresets, errorText: string 
     if(isNullOrEmpty(s))
       return errorText ?? 'Value must be entered';
 
-    if (!Number.isInteger(s) && !isFloat(value))
+    if (isNaN(Number(s)))
+      return errorText ?? 'Incorrect number provided';
+
+    const n = value as number;
+
+    if(!isFloat(n))
       return errorText ?? 'Incorrect number provided';
 
     if (p === ValidationPresets.FloatPositive) {
@@ -95,44 +100,8 @@ function validatePreset(value: unknown, p: ValidationPresets, errorText: string 
   return undefined;
 }
 
-export class ValidationMarkerMap {
-  private readonly validatedComponents;
-
-  constructor(
-    private classNameInvalid: string,
-    private classNameValid?: string,
-    private onChanged?: (e: ValidateEvent) => void
-  ) {
-    this.validatedComponents = ref<Map<string, boolean>>(new Map<string, boolean>());
-  }
-
-  public get(component: string): string | undefined {
-    return this.validatedComponents.value.get(component) ? this.classNameValid : this.classNameInvalid;
-  }
-  public set(component: string, e: ValidateEvent): void {
-    this.validatedComponents.value.set(component, e.isValid);
-
-    if(this.onChanged) {
-      this.onChanged.call(e, e);
-    }
-  }
-  public validateAll(): boolean {
-    let isValid = true;
-
-    this.validatedComponents.value.forEach(v => {
-      if(!v)
-      {
-        isValid = false;
-        return;
-      }
-    });
-
-    return isValid;
-  }
-}
-
 export default defineComponent({
-  name: "Validator",
+  name: "VModelValidator",
   emits: [ 'validate' ],
   props: {
     validationFunction: {
@@ -149,7 +118,7 @@ export default defineComponent({
     },
   },
   setup(props, options) {
-    const errorText = ref<string | undefined>();
+    const finalErrorText = ref<string | undefined>();
 
     onMounted(() => {
       if(!options.slots.default)
@@ -180,7 +149,7 @@ export default defineComponent({
             errorResult = validatePreset(value, props.validateAs, props.errorText);
           }
 
-          errorText.value = errorResult;
+          finalErrorText.value = errorResult;
 
           options.emit('validate', new ValidateEvent(errorResult === undefined, value, errorResult ));
         };
@@ -202,7 +171,7 @@ export default defineComponent({
     });
 
     return {
-      errorText
+      finalErrorText
     };
   }
 });
