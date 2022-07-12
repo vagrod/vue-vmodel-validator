@@ -32,7 +32,7 @@ import { Validator } from 'vue-vmodel-validator';
 Preset `StringNotEmpty` will be used by default.
 ``` html
 <validator>
-  <n-input v-model:text="Entity.Name" />
+  <n-input v-model:value="Entity.Name" />
 </validator>
 ```
 
