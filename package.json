@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "vue-vmodel-validator",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple vuejs 3.0+ data input validator based on v-model and v-model:value",
   "readmeFilename": "README.md",
   "scripts": {
