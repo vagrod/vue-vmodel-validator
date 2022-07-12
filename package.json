@@ -1,14 +1,14 @@
 {
   "private": false,
   "name": "vue-vmodel-validator",
-  "version": "1.0.0",
+  "version": "0.0.9",
   "description": "Simple vuejs 3.0+ data input validator based on v-model and v-model:value",
   "readmeFilename": "README.md",
   "scripts": {
     "build": "rm -rf lib && rollup -c"
   },
   "files": [
-    "dist/*"
+    "lib/*"
   ],
   "repository": {
     "type": "git",
@@ -33,6 +33,7 @@
     "vue": "^3.0.0"
   },
   "devDependencies": {
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-typescript2": "^0.32.1",
     "rollup-plugin-vue": "^6.0.0",
     "rollup-plugin-terser": "^7.0.2",

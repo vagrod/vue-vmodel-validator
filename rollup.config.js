@@ -1,6 +1,7 @@
 import pkg from './package.json'
 import typescript from 'rollup-plugin-typescript2'
 import { terser } from "rollup-plugin-terser"
+import copy from 'rollup-plugin-copy'
 import vue from 'rollup-plugin-vue' // Handle .vue SFC files
 
 const name = "vueVmodelValidator";
@@ -80,6 +81,13 @@ export default {
             postcssOptions: {
                 extract: true
             }
+        }),
+
+        copy({
+            targets: [
+                { src: 'README.md', dest: 'lib/' },
+                { src: 'package.json', dest: 'lib/' }
+            ]
         })
     ]
 };
