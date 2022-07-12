@@ -57,13 +57,13 @@ Year
 Guid
 ```
 
-You can ocerride default error message with `error-text` prop:
+You can override default error message with `error-text` prop:
 ``` ts
 import { ValidationPresets } from 'vue-vmodel-validator';
 ```
 ``` html
 <validator :validate-as="ValidationPresets.Year" error-text="Enter a valid birth year">
-  <input v-model:text="Entity.BirthYear" />
+  <n-input v-model:text="Entity.BirthYear" />
 </validator>
 ```
 
@@ -83,8 +83,8 @@ const validateAge = (value: unknown): string | undefined => {
 }
 ```
 ``` html
-<validator :validate-function="validateAge">
-  <input v-model:text="Entity.Age" />
+<validator :validation-function="validateAge">
+  <n-input v-model:text="Entity.Age" />
 </validator>
 ```
 When `validation-function` is used, `error-text` prop will be ignored.
