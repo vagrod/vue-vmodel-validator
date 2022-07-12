@@ -63,7 +63,7 @@ import { ValidationPresets } from 'vue-vmodel-validator';
 ```
 ``` html
 <validator :validate-as="ValidationPresets.Year" error-text="Enter a valid birth year">
-  <n-input v-model:text="Entity.BirthYear" />
+  <n-input v-model:value="Entity.BirthYear" />
 </validator>
 ```
 
@@ -84,7 +84,7 @@ const validateAge = (value: unknown): string | undefined => {
 ```
 ``` html
 <validator :validation-function="validateAge">
-  <n-input v-model:text="Entity.Age" />
+  <n-input v-model:value="Entity.Age" />
 </validator>
 ```
 When `validation-function` is used, `error-text` prop will be ignored.
