@@ -1,7 +1,7 @@
 <template>
   <slot />
   <slot name="message" v-bind:text="finalErrorText" v-if="finalErrorText">
-    <small>{{ finalErrorText }}</small>
+    <small class="vmvalidator-err">{{ finalErrorText }}</small>
   </slot>
 </template>
 
@@ -176,3 +176,8 @@ export default defineComponent({
   }
 });
 </script>
+<style lang="css" scoped>
+  .vmvalidator-err {
+    color: red;
+  }
+</style>

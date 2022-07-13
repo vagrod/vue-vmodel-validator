@@ -3,6 +3,8 @@ import typescript from 'rollup-plugin-typescript2'
 import { terser } from "rollup-plugin-terser"
 import copy from 'rollup-plugin-copy'
 import vue from 'rollup-plugin-vue' // Handle .vue SFC files
+import css from 'rollup-plugin-css-porter';
+import { entryCodeInjector as inject } from 'rollup-plugin-entry-code-injector';
 
 const name = "vueVmodelValidator";
 const lib = 'vue-vmodel-validator';
@@ -58,6 +60,13 @@ export default {
         "vue"
     ],
     plugins: [
+        css({
+            dest: 'lib/styles.css',
+        }),
+        inject({
+            prepend: 'require("./styles.css");'
+        }),
+
         typescript({
             typescript: require('typescript'),
             objectHashIgnoreUnknownHack: true,
