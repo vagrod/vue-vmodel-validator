@@ -1,9 +1,10 @@
+import { App } from 'vue';
 import Validator from "./Validator.vue";
 import { ValidateEvent, ValidationPresets, ValidationMarkerMap } from "./Shared";
 
 export default {
-    install(Vue) {
-        Vue.component("validator", Validator);
+    install(app: App) {
+        app.component("validator", Validator);
     }
 };
 export {

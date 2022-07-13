@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
-    "declaration": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "strict": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
